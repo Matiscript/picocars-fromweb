@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Añadir Coche - Picocars</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: var(--tg-theme-bg-color, #ffffff);
+            color: var(--tg-theme-text-color, #000000);
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--tg-theme-hint-color, #ccc);
+            border-radius: 5px;
+            box-sizing: border-box;
+            background-color: var(--tg-theme-bg-color, #ffffff);
+            color: var(--tg-theme-text-color, #000000);
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--tg-theme-button-color, #2481cc);
+            color: var(--tg-theme-button-text-color, #ffffff);
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Añadir Vehículo</h2>
+
+    <div class="form-group">
+        <label for="marca">Marca</label>
+        <input type="text" id="marca" required>
+    </div>
+    <div class="form-group">
+        <label for="modelo">Modelo</label>
+        <input type="text" id="modelo" required>
+    </div>
+    <div class="form-group">
+        <label for="precio">Precio (€)</label>
+        <input type="number" id="precio" required>
+    </div>
+    <div class="form-group">
+        <label for="anio">Año</label>
+        <input type="number" id="anio" required>
+    </div>
+    <div class="form-group">
+        <label for="km">Kilómetros</label>
+        <input type="number" id="km" required>
+    </div>
+    <div class="form-group">
+        <label for="cv">Potencia (CV)</label>
+        <input type="number" id="cv" required>
+    </div>
+    <div class="form-group">
+        <label for="matricula">Matrícula</label>
+        <input type="text" id="matricula" required>
+    </div>
+
+    <button id="guardarBtn">Guardar Coche</button>
+
+    <script>
+        // Inicializar Telegram Web App
+        let tg = window.Telegram.WebApp;
+        tg.expand(); // Expande la app para que ocupe toda la pantalla
+
+        document.getElementById("guardarBtn").addEventListener("click", function() {
+            // Recoger los datos del formulario
+            let cocheData = {
+                action: "nuevo_coche",
+                marca: document.getElementById("marca").value,
+                modelo: document.getElementById("modelo").value,
+                precio: document.getElementById("precio").value,
+                anio: document.getElementById("anio").value,
+                km: document.getElementById("km").value,
+                cv: document.getElementById("cv").value,
+                matricula: document.getElementById("matricula").value
+            };
+
+            // Enviar el JSON de vuelta al bot de Telegram (y por tanto a n8n)
+            tg.sendData(JSON.stringify(cocheData));
+            
+            // Cerrar la Web App
+            tg.close();
+        });
+    </script>
+</body>
+</html>
